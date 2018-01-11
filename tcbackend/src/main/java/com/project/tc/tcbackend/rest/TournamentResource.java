@@ -28,7 +28,7 @@ public class TournamentResource {
   @GetMapping
   @RequestMapping("/tournaments/{id}")
   public Tournament getTournamentById(@PathVariable Integer tournamentId) {
-    return tournamentRepository.findOne(tournamentId);
+    return tournamentRepository.findById(tournamentId).get();
   }
 
   @PostMapping
