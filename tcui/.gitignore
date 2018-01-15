@@ -7,7 +7,6 @@
 
 # dependencies
 /node_modules
-/node_modules/bulma
 
 # IDEs and editors
 /.idea

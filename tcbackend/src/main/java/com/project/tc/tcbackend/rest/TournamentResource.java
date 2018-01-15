@@ -27,12 +27,18 @@ public class TournamentResource {
 
   @GetMapping
   @RequestMapping("/tournaments/{id}")
-  public Tournament getTournamentById(@PathVariable Integer tournamentId) {
+  public Tournament getTournamentById(@PathVariable("id") Integer tournamentId) {
     return tournamentRepository.findById(tournamentId).get();
   }
 
+  @GetMapping
+  @RequestMapping("/tournaments/exists/{id}")
+  public Boolean getTournamentExistsById(@PathVariable("id") Integer tournamentId) {
+    return tournamentRepository.findById(tournamentId).isPresent();
+  }
+
   @PostMapping
-  @RequestMapping("/tournaments/create")
+  @RequestMapping("/tournaments/store")
   public Tournament storeTournament(@RequestBody Tournament tournament) {
     Tournament saved = tournamentRepository.save(tournament);
     return saved;
