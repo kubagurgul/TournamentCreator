@@ -6,6 +6,9 @@ import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/fromEvent";
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
+import {ToggleTournamentAction} from "../reducers/reducers";
+import {Store} from "@ngrx/store";
+import "rxjs/add/operator/do";
 
 @Component({
   selector: 'app-home',
@@ -23,15 +26,23 @@ export class HomeComponent implements OnInit {
   isIdValid = false;
 
 
-  constructor(private router: Router, private service: TournamentService) {
+  constructor(private router: Router, private service: TournamentService, private store: Store<any>) {
   }
 
   ngOnInit() {
     Observable.fromEvent(this.tournamentId.nativeElement, 'keyup')
+      .do(() => this.isIdValid = false)
       .map((event: any) => Number(event.target.value))
       .debounceTime(500)
       .distinctUntilChanged()
-      .subscribe((tournamentId: number) => this.service.getTournamentExistsById(tournamentId));
+      .subscribe(
+        (tournamentId: number) => this.service.getTournamentExistsById(tournamentId)
+          .subscribe(
+            exists => {
+              this.isIdValid = exists;
+              console.log(exists);
+            }
+          ));
   }
 
   createTournament() {
@@ -48,13 +59,7 @@ export class HomeComponent implements OnInit {
   }
 
   goToTournament() {
-    // console.log(this.tournamentId.nativeElement.value);
-    // this.service.getTournamentById(this.tournamentId.nativeElement.value);
-    this.service.getTournamentExistsById(this.tournamentId.nativeElement.value);
-  }
-
-  onTournamentIdChange(event) {
-
+    this.router.navigate(['/tournament/' + this.tournamentId.nativeElement.value]);
   }
 
 }

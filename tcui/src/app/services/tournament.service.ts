@@ -4,6 +4,7 @@ import {Tournament} from "../model/tournament.model";
 import "rxjs/add/operator/map";
 import {Store} from "@ngrx/store";
 import {ToggleTournamentAction} from "../reducers/reducers";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class TournamentService {
@@ -11,12 +12,12 @@ export class TournamentService {
 
   }
 
-  public getTournamentById(id: number): any {
-    return this.http.get("http://localhost:4200/api/tournaments/" + id).subscribe((x: Tournament) => this.store.dispatch(new ToggleTournamentAction(x)));
+  public getTournamentById(id: number): Observable<any> {
+    return this.http.get("http://localhost:4200/api/tournaments/" + id);
   }
 
-  public getTournamentExistsById(id: number): any {
-    return this.http.get("http://localhost:4200/api/tournaments/exists/" + id).subscribe(x => console.log(x));
+  public getTournamentExistsById(id: number): Observable<any> {
+    return this.http.get("http://localhost:4200/api/tournaments/exists/" + id);
   }
 
   public storeTournament(tournament: Tournament): any {

@@ -2,10 +2,10 @@
   Go to your tournament:
   <div class="field has-addons">
     <div class="control">
-      <input #tournamentId class="input" type="text" placeholder="Tournament id" (keyup)="onTournamentIdChange($event)">
+      <input #tournamentId class="input" type="text" placeholder="Tournament id">
     </div>
     <div class="control">
-      <a class="button is-info" (click)="goToTournament()">
+      <a class="button is-info" (click)="goToTournament()" [attr.disabled]="isIdValid ? null : ''">
         Go
       </a>
     </div>
