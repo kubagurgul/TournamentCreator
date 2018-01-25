@@ -28,13 +28,17 @@ public class TournamentResource {
   @GetMapping
   @RequestMapping("/tournaments/{id}")
   public Tournament getTournamentById(@PathVariable("id") Integer tournamentId) {
-    return tournamentRepository.findById(tournamentId).get();
+    Tournament tournament = tournamentRepository.findById(tournamentId).get();
+    if (tournament.getPlayers() == null) {
+      tournament.setPlayers(new ArrayList<>());
+    }
+    return tournament;
   }
 
   @GetMapping
   @RequestMapping("/tournaments/exists/{id}")
   public Boolean getTournamentExistsById(@PathVariable("id") Integer tournamentId) {
-    return tournamentRepository.findById(tournamentId).isPresent();
+    return tournamentRepository.existsById(tournamentId);
   }
 
   @PostMapping

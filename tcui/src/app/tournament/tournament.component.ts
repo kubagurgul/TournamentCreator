@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {ToggleTournamentAction} from "../reducers/reducers";
+import {AddPlayerAction, getTournament, ToggleTournamentAction} from "../reducers/reducers";
 import {Tournament} from "../model/tournament.model";
 import {Store} from "@ngrx/store";
 import {TournamentService} from "../services/tournament.service";
+import {PlayerService} from "../services/player.service";
+import {Player} from "../model/player.model";
 
 @Component({
   selector: 'app-tournament',
@@ -12,16 +14,33 @@ import {TournamentService} from "../services/tournament.service";
 })
 export class TournamentComponent implements OnInit {
 
-  private title$ = "";
+  @ViewChild("playerName")
+  playerName: ElementRef;
+  private selectedTournament: Tournament;
 
-  constructor(private route: ActivatedRoute, private router: Router, private store: Store<any>, private service: TournamentService) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private store: Store<any>,
+              private tournamentService: TournamentService,
+              private playerService: PlayerService) {
   }
 
   ngOnInit() {
     this.route.paramMap.map((params: ParamMap) => params.get('id'))
-      .subscribe(id => this.service.getTournamentById(Number(id)).subscribe((tournament: Tournament) => {
+      .subscribe(id => this.tournamentService.getTournamentById(Number(id)).subscribe((tournament: Tournament) => {
         this.store.dispatch(new ToggleTournamentAction(tournament))
       }));
+
+    this.store.select(getTournament).subscribe(t => this.selectedTournament = t);
+  }
+
+  addPlayer() {
+    let player: Player = {
+      name: this.playerName.nativeElement.value,
+      id: 0,
+      tournament: { id: this.selectedTournament.id }
+    };
+    this.playerService.storePlayer(player).subscribe((p: Player) => this.store.dispatch(new AddPlayerAction(p)));
   }
 
 }

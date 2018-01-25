@@ -1,8 +1,12 @@
+import {Tournament} from "./tournament.model";
+import {Player} from "./player.model";
+
 export interface Score {
   id: number;
-  playerHome: any;
-  playerAway: any;
+  playerHome: Player;
+  playerAway: Player;
   homeResult: number,
   awayResult: number,
-  result: any;
+  result?: any;
+  tournament: Tournament;
 }

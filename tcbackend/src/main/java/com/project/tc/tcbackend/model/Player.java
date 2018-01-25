@@ -1,6 +1,8 @@
 package com.project.tc.tcbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,39 +13,40 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="player")
+@Table(name = "player")
 public class Player {
-  private Integer id;
-  private String name;
-  private Tournament tournament;
+    private Integer id;
+    private String name;
+    private Tournament tournament;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  public Integer getId() {
-    return id;
-  }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
+        return id;
+    }
 
-  @JsonIgnore
-  @ManyToOne(fetch = FetchType.LAZY)
-  public Tournament getTournament() {
-    return tournament;
-  }
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Tournament getTournament() {
+        return tournament;
+    }
 
-  public String getName() {
-    return name;
-  }
-
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
+    public String getName() {
+        return name;
+    }
 
 
-  public void setTournament(Tournament tournament) {
-    this.tournament = tournament;
-  }
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    @JsonProperty
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
+    }
 }

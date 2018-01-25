@@ -38,7 +38,6 @@ public class Tournament {
     return scores;
   }
 
-  @JsonIgnore
   @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL, orphanRemoval = true)
   public List<Player> getPlayers() {
     return players;

@@ -3,7 +3,6 @@ import {HttpClient} from "@angular/common/http";
 import {Tournament} from "../model/tournament.model";
 import "rxjs/add/operator/map";
 import {Store} from "@ngrx/store";
-import {ToggleTournamentAction} from "../reducers/reducers";
 import {Observable} from "rxjs/Observable";
 
 @Injectable()

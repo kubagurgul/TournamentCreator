@@ -23,6 +23,7 @@ public class ScoreResource {
   @PostMapping
   @RequestMapping("score/create")
   public Score storeScore(@RequestBody Score score) {
+    System.out.println(score);
     return this.scoreRepository.save(score);
   }
 }

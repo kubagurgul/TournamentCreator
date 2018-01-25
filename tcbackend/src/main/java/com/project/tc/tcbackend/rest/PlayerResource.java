@@ -13,28 +13,28 @@ import static org.springframework.data.jpa.domain.Specifications.where;
 @RestController
 public class PlayerResource {
 
-  @Autowired
-  private PlayerRepository playerRepository;
+    @Autowired
+    private PlayerRepository playerRepository;
 
-  @GetMapping
-  @RequestMapping("/players/byTournament/{tournamentId}")
-  public List<Player> getPlayersByTournamentId(@PathVariable("tournamentId") Integer tournamentId) {
-    List<Player> players = playerRepository.findAll(where(PlayerSpecifications.playerByTournament(tournamentId)));
-    return players;
-  }
+    @GetMapping
+    @RequestMapping("/players/byTournament/{tournamentId}")
+    public List<Player> getPlayersByTournamentId(@PathVariable("tournamentId") Integer tournamentId) {
+        List<Player> players = playerRepository.findAll(where(PlayerSpecifications.playerByTournament(tournamentId)));
+        return players;
+    }
 
-  @GetMapping
-  @RequestMapping("/players")
-  public List<Player> getAllPlayers() {
-    List<Player> all = playerRepository.findAll();
-    return all;
-  }
+    @GetMapping
+    @RequestMapping("/players")
+    public List<Player> getAllPlayers() {
+        List<Player> all = playerRepository.findAll();
+        return all;
+    }
 
-  @PostMapping
-  @RequestMapping("/players/create")
-  public Player storePlayer(@RequestBody Player player) {
-    return playerRepository.save(player);
-  }
+    @PostMapping
+    @RequestMapping("/players/create")
+    public Player storePlayer(@RequestBody Player player) {
+        return playerRepository.save(player);
+    }
 
 
 }

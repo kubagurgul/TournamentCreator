@@ -10,13 +10,17 @@ import {TournamentService} from "./services/tournament.service";
 import {StoreModule} from "@ngrx/store";
 import {reducers} from "./reducers/reducers";
 import {AppRoutingModule} from "./app-routing.module";
+import {PlayerService} from "./services/player.service";
+import { ScoreComponent } from './tournament/score/score/score.component';
+import {ScoreService} from "./services/score.service";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    TournamentComponent
+    TournamentComponent,
+    ScoreComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +28,11 @@ import {AppRoutingModule} from "./app-routing.module";
     StoreModule.forRoot(reducers),
     AppRoutingModule
   ],
-  providers: [TournamentService],
+  providers: [
+    TournamentService,
+    PlayerService,
+    ScoreService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

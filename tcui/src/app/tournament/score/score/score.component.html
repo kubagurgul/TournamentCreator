@@ -1,0 +1,25 @@
+<div class="score">
+  <div *ngIf="score; else noScore">
+    {{ score.id }}
+  </div>
+  <ng-template #noScore>
+    <div *ngIf="idAway == idHome;else newScore">
+      X
+    </div>
+    <ng-template #newScore>
+      <div class="columns">
+        <div class="column">
+          <input class="input" type="text" placeholder="Text input" #homeInput>
+        </div>
+        <div class="column">
+          <input class="input" type="text" placeholder="Text input" #awayInput>
+        </div>
+        <div class="column">
+          <a class="button is-primary" (click)="storeScore()">
+            OK
+          </a>
+        </div>
+      </div>
+    </ng-template>
+  </ng-template>
+</div>
