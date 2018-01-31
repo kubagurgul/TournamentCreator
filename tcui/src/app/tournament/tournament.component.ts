@@ -6,6 +6,7 @@ import {Store} from "@ngrx/store";
 import {TournamentService} from "../services/tournament.service";
 import {PlayerService} from "../services/player.service";
 import {Player} from "../model/player.model";
+import {Score} from "../model/score.model";
 
 @Component({
   selector: 'app-tournament',
@@ -31,16 +32,28 @@ export class TournamentComponent implements OnInit {
         this.store.dispatch(new ToggleTournamentAction(tournament))
       }));
 
-    this.store.select(getTournament).subscribe(t => this.selectedTournament = t);
+    this.store.select(getTournament).subscribe(t => {
+      this.selectedTournament = t;
+      console.log(this.selectedTournament);
+    });
   }
 
   addPlayer() {
     let player: Player = {
       name: this.playerName.nativeElement.value,
       id: 0,
-      tournament: { id: this.selectedTournament.id }
+      tournament: {id: this.selectedTournament.id}
     };
     this.playerService.storePlayer(player).subscribe((p: Player) => this.store.dispatch(new AddPlayerAction(p)));
+  }
+
+  getScore(homeId: number, awayId: number): Score {
+    if (!this.selectedTournament.scores) return null;
+    let scores = this.selectedTournament.scores.filter(score => score.playerHome.id == homeId && score.playerAway.id == awayId);
+    if (scores.length > 0) {
+      return scores[0];
+    }
+    return null;
   }
 
 }

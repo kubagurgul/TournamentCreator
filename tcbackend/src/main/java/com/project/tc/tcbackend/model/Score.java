@@ -1,6 +1,7 @@
 package com.project.tc.tcbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import javax.persistence.*;
@@ -63,6 +64,7 @@ public class Score {
     this.playerAway = playerAway;
   }
 
+  @JsonProperty
   public void setTournament(Tournament tournament) {
     this.tournament = tournament;
   }

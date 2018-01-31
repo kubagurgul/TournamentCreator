@@ -13,6 +13,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {PlayerService} from "./services/player.service";
 import { ScoreComponent } from './tournament/score/score/score.component';
 import {ScoreService} from "./services/score.service";
+import { TableComponent } from './tournament/table/table.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {ScoreService} from "./services/score.service";
     AppComponent,
     HomeComponent,
     TournamentComponent,
-    ScoreComponent
+    ScoreComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,

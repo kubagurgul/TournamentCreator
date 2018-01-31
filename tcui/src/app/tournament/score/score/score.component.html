@@ -1,6 +1,6 @@
 <div class="score">
   <div *ngIf="score; else noScore">
-    {{ score.id }}
+    {{score.homeResult}}:{{score.awayResult}}
   </div>
   <ng-template #noScore>
     <div *ngIf="idAway == idHome;else newScore">

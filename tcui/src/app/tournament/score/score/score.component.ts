@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Score} from "../../../model/score.model";
 import {Store} from "@ngrx/store";
-import {getTournament} from "../../../reducers/reducers";
+import {AddScoreAction, getTournament} from "../../../reducers/reducers";
 import {ScoreService} from "../../../services/score.service";
 
 @Component({
@@ -44,8 +44,9 @@ export class ScoreComponent implements OnInit {
       tournament: { id: this.selectedTournament.id },
       result: null
     };
-    this.service.storeScore(score).subscribe(s => {
-      this.store.select(getTournament).subscribe(t => this.selectedTournament = t);
+    console.log("save score {}", score);
+    this.service.storeScore(score).subscribe((s: Score) => {
+      this.store.dispatch(new AddScoreAction(s))
     });
   }
 

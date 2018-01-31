@@ -1,6 +1,7 @@
 package com.project.tc.tcbackend.rest;
 
 import com.google.common.collect.Lists;
+import com.project.tc.tcbackend.model.Result;
 import com.project.tc.tcbackend.model.Score;
 import com.project.tc.tcbackend.repository.ScoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,13 @@ public class ScoreResource {
   @PostMapping
   @RequestMapping("score/create")
   public Score storeScore(@RequestBody Score score) {
-    System.out.println(score);
+    if (score.getAwayResult() > score.getHomeResult()) {
+      score.setResult(Result.AWAY_WON);
+    } else if (score.getAwayResult() < score.getHomeResult()) {
+      score.setResult(Result.HOME_WON);
+    } else {
+      score.setResult(Result.DRAW);
+    }
     return this.scoreRepository.save(score);
   }
 }

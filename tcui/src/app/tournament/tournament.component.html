@@ -1,31 +1,38 @@
 <section class="section">
-  <div class="container">
-    <h1>Tournament : {{ selectedTournament.name }}</h1>
+  <ng-container *ngIf="selectedTournament">
+    <div class="container">
+      <h1>Tournament : {{ selectedTournament.name }}</h1>
 
-    <div class="columns is-mobile">
-      <div class="column">X</div>
-      <div class="column" *ngFor="let player of selectedTournament.players">
-        {{player.name}}
+
+      <div class="columns is-mobile">
+        <div class="column">X</div>
+        <div class="column" *ngFor="let player of selectedTournament.players">
+          {{player.name}}
+        </div>
+      </div>
+      <div class="columns is-mobile" *ngFor="let player of selectedTournament.players; let columnIndex = index">
+        <div class="column">{{player.name}}</div>
+        <div class="column" *ngFor="let player of selectedTournament.players; let rowIndex = index">
+
+          <app-score
+            [idAway]="selectedTournament.players[columnIndex].id"
+            [idHome]="selectedTournament.players[rowIndex].id"
+            [score]="getScore(selectedTournament.players[rowIndex].id, selectedTournament.players[columnIndex].id)">
+          </app-score>
+        </div>
+      </div>
+
+      <div class="control">
+        <input #playerName class="input" type="text" placeholder="Player name">
+      </div>
+      <div class="control">
+        <a class="button is-info" (click)="addPlayer()">
+          Add player
+        </a>
       </div>
     </div>
-    <div class="columns is-mobile" *ngFor="let player of selectedTournament.players; let columnIndex = index">
-      <div class="column">{{player.name}}</div>
-      <div class="column" *ngFor="let player of selectedTournament.players; let rowIndex = index">
-        <app-score
-          [idAway]="selectedTournament.players[columnIndex].id"
-          [idHome]="selectedTournament.players[rowIndex].id">
-
-        </app-score>
-      </div>
-    </div>
-
-    <div class="control">
-      <input #playerName class="input" type="text" placeholder="Player name">
-    </div>
-    <div class="control">
-      <a class="button is-info" (click)="addPlayer()">
-        Add player
-      </a>
-    </div>
-  </div>
+  </ng-container>
+</section>
+<section class="section">
+  <app-table></app-table>
 </section>

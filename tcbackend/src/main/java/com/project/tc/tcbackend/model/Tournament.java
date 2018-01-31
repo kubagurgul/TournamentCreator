@@ -1,7 +1,5 @@
 package com.project.tc.tcbackend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +30,6 @@ public class Tournament {
     return url;
   }
 
-  @JsonIgnore
   @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL, orphanRemoval = true)
   public List<Score> getScores() {
     return scores;
