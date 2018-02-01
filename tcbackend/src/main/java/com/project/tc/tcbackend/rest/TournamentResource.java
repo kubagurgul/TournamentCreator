@@ -97,7 +97,7 @@ public class TournamentResource {
                         statsDTO.setGd(statsDTO.getGf() - statsDTO.getGa());
                         return statsDTO;
                     })
-                    .sorted((Comparator.comparing(TeamStatsDTO::getPoints)))
+                    .sorted((Comparator.comparing(TeamStatsDTO::getPoints).reversed()))
                     .collect(Collectors.toList());
         }
         return stats;

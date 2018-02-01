@@ -44,16 +44,47 @@ export class AddScoreAction implements Action {
   }
 }
 
+function updateStats(state: TournamentState, score: Score) {
+  let home: TeamStats = state.teamsStats.filter(s => s.id === score.playerHome.id)[0];
+  let away: TeamStats = state.teamsStats.filter(s => s.id === score.playerAway.id)[0];
+  home.played = home.played++;
+  away.played = away.played++;
+  if ("DRAW" == score.result) {
+    home.points = home.points++;
+    away.points = away.points++;
+    home.drawn = home.drawn++;
+    away.drawn = away.drawn++;
+  } else if ("HOME_WON" == score.result) {
+    home.points = home.points + 3;
+    home.won = home.won++;
+    away.lost = away.lost++;
+  } else {
+    away.points = away.points + 3;
+    home.lost = home.lost++;
+    away.won = away.won++;
+  }
+  home.gf = home.gf + score.homeResult;
+  home.ga = home.ga + score.awayResult;
+  away.gf = away.gf + score.awayResult;
+  away.ga = away.ga + score.homeResult;
+}
+
 export function tournamentReducer(state: TournamentState = initialState, action: any): TournamentState {
   switch (action.type) {
     case TOGGLE_TOURNAMENT:
-      return { tournament: action.tournament, teamsStats: action.teamsStats };
+      action.teamsStats.forEach((s: TeamStats) => s.name = action.tournament.players.filter(p => s.id === p.id)[0].name);
+      return {tournament: action.tournament, teamsStats: action.teamsStats};
     case ADD_PLAYER: {
+      let playerAdded: Player = action.payload;
       state.tournament.players.push(action.payload);
+      state.teamsStats.push(new TeamStats(playerAdded.id));
       return state;
     }
     case ADD_SCORE: {
-      state.tournament.scores.push(action.payload);
+      let score = action.payload;
+      state.tournament.scores.push(score);
+      updateStats(state, score);
+      state.teamsStats.sort((s1, s2) => s2.points - s1.points);
       return state;
     }
     default:
