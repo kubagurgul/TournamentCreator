@@ -1,7 +1,7 @@
 <section class="section">
   <ng-container *ngIf="selectedTournament">
     <div class="container">
-      <h1>Tournament : {{ selectedTournament.name }}</h1>
+      <h1 class="title">T{{ selectedTournament.name }}</h1>
 
 
       <div class="columns is-mobile">
@@ -35,4 +35,13 @@
 </section>
 <section class="section">
   <app-table></app-table>
+
 </section>
+<section class="section">
+  <footer class="footer">
+    <div class="container">
+      <a class="button" (click)="goBack()">Back</a>
+    </div>
+  </footer>
+</section>
+

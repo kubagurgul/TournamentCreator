@@ -1,24 +1,27 @@
 <section class="section">
-  Go to your tournament:
-  <div class="field has-addons">
-    <div class="control">
-      <input #tournamentId class="input" type="text" placeholder="Tournament id">
+  <div class="container">
+    Go to your tournament:
+    <div class="field has-addons">
+      <div class="control">
+        <input #tournamentId class="input" type="text" placeholder="Tournament id">
+      </div>
+      <div class="control">
+        <a class="button is-info" (click)="goToTournament()" [attr.disabled]="isIdValid ? null : ''">
+          Go
+        </a>
+      </div>
     </div>
-    <div class="control">
-      <a class="button is-info" (click)="goToTournament()" [attr.disabled]="isIdValid ? null : ''">
-        Go
-      </a>
-    </div>
-  </div>
-  Or create new:
-  <div class="field has-addons">
-    <div class="control">
-      <input #tournamentName class="input" type="text" placeholder="Tournament name">
-    </div>
-    <div class="control">
-      <a class="button is-info" (click)="createTournament()">
-        Create
-      </a>
+    Or create new:
+    <div class="field has-addons">
+      <div class="control">
+        <input #tournamentName class="input" type="text" placeholder="Tournament name">
+      </div>
+      <div class="control">
+        <a class="button is-info" (click)="createTournament()">
+          Create
+        </a>
+      </div>
     </div>
   </div>
 </section>
+

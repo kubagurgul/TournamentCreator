@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit {
       players: [],
       scores: []
     };
-    this.service.storeTournament(tournament);
+    this.service.storeTournament(tournament).toPromise().then(t => this.router.navigate(['/tournament/' + t.id]));
 
   }
 

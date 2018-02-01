@@ -20,8 +20,7 @@ export class TournamentService {
   }
 
   public storeTournament(tournament: Tournament): any {
-    return this.http.post("http://localhost:4200/api/tournaments/store", tournament)
-      .subscribe(x=> console.log(x));
+    return this.http.post("http://localhost:4200/api/tournaments/store", tournament);
   }
 
   public getTeamsStats(id: number): any {

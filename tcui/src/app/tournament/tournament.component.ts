@@ -8,6 +8,7 @@ import {PlayerService} from "../services/player.service";
 import {Player} from "../model/player.model";
 import {Score} from "../model/score.model";
 import {TeamStats} from "../model/team-stats.model";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-tournament',
@@ -22,6 +23,7 @@ export class TournamentComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
+              private location: Location,
               private store: Store<any>,
               private tournamentService: TournamentService,
               private playerService: PlayerService) {
@@ -59,6 +61,10 @@ export class TournamentComponent implements OnInit {
       return scores[0];
     }
     return null;
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }
