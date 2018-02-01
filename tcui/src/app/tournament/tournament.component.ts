@@ -7,6 +7,7 @@ import {TournamentService} from "../services/tournament.service";
 import {PlayerService} from "../services/player.service";
 import {Player} from "../model/player.model";
 import {Score} from "../model/score.model";
+import {TeamStats} from "../model/team-stats.model";
 
 @Component({
   selector: 'app-tournament',
@@ -28,13 +29,17 @@ export class TournamentComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.map((params: ParamMap) => params.get('id'))
-      .subscribe(id => this.tournamentService.getTournamentById(Number(id)).subscribe((tournament: Tournament) => {
-        this.store.dispatch(new ToggleTournamentAction(tournament))
-      }));
+      .subscribe(id => {
+          this.tournamentService.getTournamentById(Number(id)).subscribe((tournament: Tournament) => {
+            this.tournamentService.getTeamsStats(Number(id)).subscribe((teamsStats: Array<TeamStats>) => {
+              this.store.dispatch(new ToggleTournamentAction(tournament, teamsStats));
+            });
+          });
+        }
+      );
 
     this.store.select(getTournament).subscribe(t => {
       this.selectedTournament = t;
-      console.log(this.selectedTournament);
     });
   }
 

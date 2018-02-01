@@ -93,10 +93,16 @@ public class TeamStatsDTO implements Serializable {
     public void addWin() {
         this.won++;
     }
+
     public void addDraw() {
         this.drawn++;
     }
+
     public void addLost() {
         this.lost++;
+    }
+
+    public void addPoints(int points) {
+        this.points += points;
     }
 }

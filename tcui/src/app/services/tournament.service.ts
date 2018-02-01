@@ -25,7 +25,7 @@ export class TournamentService {
   }
 
   public getTeamsStats(id: number): any {
-    return this.http.get("http://localhost:4200/api/tournaments/table/" + id);
+    return this.http.get("http://localhost:4200/api/tournaments/" + id + "/table");
   }
 
 }

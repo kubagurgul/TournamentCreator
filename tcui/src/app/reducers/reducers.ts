@@ -2,6 +2,7 @@ import {Tournament} from "../model/tournament.model";
 import {Action, ActionReducerMap, createFeatureSelector, createSelector} from "@ngrx/store";
 import {Player} from "../model/player.model";
 import {Score} from "../model/score.model";
+import {TeamStats} from "../model/team-stats.model";
 
 export const TOGGLE_TOURNAMENT = 'TOGGLE_TOURNAMENT';
 export const ADD_PLAYER = 'ADD_PLAYER';
@@ -12,33 +13,41 @@ export interface AppState {
 };
 
 export interface TournamentState {
-  tournament: Tournament
+  tournament: Tournament;
+  teamsStats: Array<TeamStats>;
 };
 
 export const initialState: TournamentState = {
-  tournament: null
+  tournament: null,
+  teamsStats: null
 };
 
 export class ToggleTournamentAction implements Action {
   type = TOGGLE_TOURNAMENT;
-  constructor(public payload: Tournament) {};
+
+  constructor(public tournament: Tournament, public teamsStats: Array<TeamStats>) {
+  };
 
 }
 
 export class AddPlayerAction implements Action {
   type = ADD_PLAYER;
-  constructor(public payload: Player) {};
+
+  constructor(public payload: Player) {
+  };
 }
 
 export class AddScoreAction implements Action {
   type = ADD_SCORE;
-  constructor(public payload: Score) {}
+
+  constructor(public payload: Score) {
+  }
 }
 
 export function tournamentReducer(state: TournamentState = initialState, action: any): TournamentState {
-  switch(action.type) {
+  switch (action.type) {
     case TOGGLE_TOURNAMENT:
-      return { tournament: action.payload };
+      return { tournament: action.tournament, teamsStats: action.teamsStats };
     case ADD_PLAYER: {
       state.tournament.players.push(action.payload);
       return state;
@@ -59,6 +68,10 @@ export const getTournament = createSelector(
   (state: TournamentState) => state.tournament
 );
 
+export const getTeamsStats = createSelector(
+  getTournamentState,
+  (state: TournamentState) => state.teamsStats
+);
 export const reducers: ActionReducerMap<AppState> = {
   tournamentState: tournamentReducer
 };

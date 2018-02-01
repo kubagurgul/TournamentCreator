@@ -56,12 +56,12 @@ public class TournamentResource {
     }
 
     @GetMapping
-    @RequestMapping("/table/{id}")
+    @RequestMapping("/tournaments/{id}/table")
     public List<TeamStatsDTO> getTeamsStats(@PathVariable("id") Integer tournamentId) {
         Optional<Tournament> tournament = tournamentRepository.findById(tournamentId);
         List<TeamStatsDTO> stats = new ArrayList<>();
         if (tournament.isPresent()) {
-           stats = tournament.get().getPlayers()
+            stats = tournament.get().getPlayers()
                     .stream()
                     .map(p -> {
                         System.out.println("calculating for p with id:" + p.getId());
@@ -69,15 +69,16 @@ public class TournamentResource {
                         tournament.get().getScores()
                                 .stream()
                                 .filter(
-                                        score -> score.getPlayerAway().getId().equals(p.getId()) || score.getPlayerHome().getId().equals(p.getId()))
+                                        score -> score.getPlayerAway().getId().equals(p.getId())
+                                                || score.getPlayerHome().getId().equals(p.getId()))
                                 .forEach(score -> {
                                     statsDTO.setPlayed(statsDTO.getPlayed() + 1);
                                     boolean isHome = score.getPlayerHome().getId().equals(p.getId());
                                     if (score.getResult() == Result.DRAW) {
-                                        statsDTO.setPoints(statsDTO.getPoints() + 1);
+                                        statsDTO.addPoints(1);
                                         statsDTO.addDraw();
                                     } else if (score.getResult() == Result.HOME_WON && isHome) {
-                                        statsDTO.setPoints(statsDTO.getPoints() + 3);
+                                        statsDTO.addPoints(3);
                                         statsDTO.addWin();
                                     } else {
                                         // no points
@@ -96,7 +97,7 @@ public class TournamentResource {
                         statsDTO.setGd(statsDTO.getGf() - statsDTO.getGa());
                         return statsDTO;
                     })
-                   .sorted((Comparator.comparing(TeamStatsDTO::getPoints)))
+                    .sorted((Comparator.comparing(TeamStatsDTO::getPoints)))
                     .collect(Collectors.toList());
         }
         return stats;
