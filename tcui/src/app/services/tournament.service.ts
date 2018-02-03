@@ -11,6 +11,10 @@ export class TournamentService {
 
   }
 
+  public getAllTournaments() {
+    return this.http.get("http://localhost:4200/api/tournaments");
+  }
+
   public getTournamentById(id: number): Observable<any> {
     return this.http.get("http://localhost:4200/api/tournaments/" + id);
   }

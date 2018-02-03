@@ -12,11 +12,11 @@
       </div>
       <div class="columns is-mobile" *ngFor="let player of selectedTournament.players; let columnIndex = index">
         <div class="column player">{{player.name}}</div>
-        <div class="column" *ngFor="let player of selectedTournament.players; let rowIndex = index">
+        <div class="column match" *ngFor="let player of selectedTournament.players; let rowIndex = index">
 
           <app-score
-            [home]="selectedTournament.players[columnIndex]"
-            [away]="selectedTournament.players[rowIndex]"
+            [home]="selectedTournament.players[rowIndex]"
+            [away]="selectedTournament.players[columnIndex]"
             [score]="getScore(selectedTournament.players[rowIndex].id, selectedTournament.players[columnIndex].id)">
           </app-score>
         </div>

@@ -24,4 +24,14 @@
     </div>
   </div>
 </section>
+<section class="section">
+  <nav class="panel">
+    <p class="panel-heading">
+      Tournaments
+    </p>
+    <a *ngFor="let t of tournamentsObs | async" class="panel-block is-active" routerLink="/tournament/{{t.id}}">
+      ({{t.id}}){{t.name}}
+    </a>
 
+  </nav>
+</section>

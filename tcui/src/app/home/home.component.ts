@@ -24,12 +24,14 @@ export class HomeComponent implements OnInit {
   tournamentName: ElementRef;
 
   isIdValid = false;
+  tournamentsObs: any;
 
 
   constructor(private router: Router, private service: TournamentService, private store: Store<any>) {
   }
 
   ngOnInit() {
+    this.tournamentsObs = this.service.getAllTournaments();
     Observable.fromEvent(this.tournamentId.nativeElement, 'keyup')
       .do(() => this.isIdValid = false)
       .map((event: any) => Number(event.target.value))

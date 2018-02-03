@@ -7,18 +7,12 @@
       X
     </div>
     <ng-template #newScore>
-      <div class="columns">
-        <div class="column">
-          <input class="input" type="text" placeholder="{{home.name}}" #homeInput>
-        </div>
-        <div class="column">
-          <input class="input" type="text" placeholder="{{away.name}}" #awayInput>
-        </div>
-        <div class="column">
-          <a class="button is-primary" (click)="storeScore()">
-            OK
-          </a>
-        </div>
+      <div class="scoreInput">
+        <input class="input" type="text" placeholder="{{home.name}}" #homeInput style="width:35%">
+        <input class="input" type="text" placeholder="{{away.name}}" #awayInput style="width:35%">
+        <a class="button is-primary" (click)="storeScore()" style="width:20%">
+          OK
+        </a>
       </div>
     </ng-template>
   </ng-template>
