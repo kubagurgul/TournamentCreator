@@ -3,6 +3,7 @@ import {Score} from "../../../model/score.model";
 import {Store} from "@ngrx/store";
 import {AddScoreAction, getTournament} from "../../../reducers/reducers";
 import {ScoreService} from "../../../services/score.service";
+import {Player} from "../../../model/player.model";
 
 @Component({
   selector: 'app-score',
@@ -13,9 +14,9 @@ export class ScoreComponent implements OnInit {
   @Input()
   private score?: Score;
   @Input()
-  private idHome: number;
+  private home: Player;
   @Input()
-  private idAway: number;
+  private away: Player;
   @ViewChild("homeInput")
   homeInput: ElementRef;
   @ViewChild("awayInput")
@@ -31,14 +32,14 @@ export class ScoreComponent implements OnInit {
   }
 
   private findScore(): Score {
-    return this.selectedTournament.scores.find((score: Score) => score.playerHome.id == this.idHome && score.playerAway.id == this.idAway);
+    return this.selectedTournament.scores.find((score: Score) => score.playerHome.id == this.home.id && score.playerAway.id == this.away.id);
   }
 
   private storeScore() {
     let score: Score = {
       id: 0,
-      playerHome: { id: this.idHome },
-      playerAway: { id: this.idAway },
+      playerHome: { id: this.home.id },
+      playerAway: { id: this.away.id },
       homeResult: Number(this.homeInput.nativeElement.value),
       awayResult: Number(this.awayInput.nativeElement.value),
       tournament: { id: this.selectedTournament.id },

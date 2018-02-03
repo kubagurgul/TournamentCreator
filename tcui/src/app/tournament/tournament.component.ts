@@ -45,6 +45,10 @@ export class TournamentComponent implements OnInit {
     });
   }
 
+  getPlayerById(id: number) {
+    this.selectedTournament.players.find(p => p.id === id);
+  }
+
   addPlayer() {
     let player: Player = {
       name: this.playerName.nativeElement.value,
@@ -52,6 +56,7 @@ export class TournamentComponent implements OnInit {
       tournament: {id: this.selectedTournament.id}
     };
     this.playerService.storePlayer(player).subscribe((p: Player) => this.store.dispatch(new AddPlayerAction(p)));
+    this.playerName.nativeElement.value = "";
   }
 
   getScore(homeId: number, awayId: number): Score {

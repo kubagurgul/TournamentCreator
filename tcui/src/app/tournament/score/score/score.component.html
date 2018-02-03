@@ -3,16 +3,16 @@
     {{score.homeResult}}:{{score.awayResult}}
   </div>
   <ng-template #noScore>
-    <div *ngIf="idAway == idHome;else newScore">
+    <div *ngIf="away.id === home.id;else newScore">
       X
     </div>
     <ng-template #newScore>
       <div class="columns">
         <div class="column">
-          <input class="input" type="text" placeholder="Text input" #homeInput>
+          <input class="input" type="text" placeholder="{{home.name}}" #homeInput>
         </div>
         <div class="column">
-          <input class="input" type="text" placeholder="Text input" #awayInput>
+          <input class="input" type="text" placeholder="{{away.name}}" #awayInput>
         </div>
         <div class="column">
           <a class="button is-primary" (click)="storeScore()">
